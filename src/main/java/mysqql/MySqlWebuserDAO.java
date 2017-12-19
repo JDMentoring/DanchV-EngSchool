@@ -37,11 +37,11 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
 
     @Override
     public String getCreateQuery() {
-        return "INSERT into webUsers (login, password, persons_id, right_id, status_id) " +
+        return "INSERT into webUsers (login, password, persons_id, rights_id, status_id) " +
                 "VALUES(?, ?, " +
                 "(SELECT id FROM persons WHERE firstName = ? AND secondName = ?)," +
                 " (SELECT id FROM rights WHERE userRights = ?)," +
-                " (SELECT id FROM status WHERE userStatus = ?))";
+                " (SELECT id FROM status WHERE userStatus = ?));";
 
     }
 
@@ -97,8 +97,8 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
                 wu.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 wu.setLogin(rs.getString("login"));
                 wu.setPassword(rs.getString("password"));
-                wu.setRights(rs.getInt("rights_id"));
-                wu.setStatus(rs.getInt("status_id"));
+                wu.setRights(rs.getString("userRights"));
+                wu.setStatus(rs.getString("userStatus"));
                 result.add(wu);
 
             }
